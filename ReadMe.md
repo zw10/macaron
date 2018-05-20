@@ -70,13 +70,13 @@ Evaluation
 4. Contempt factor: roughly a fifth of a pawn
 5. Phasing: graduated phasing into endgame evaluation
 6. Some positional features, such as:
-	a. pawn formation:
-		i. Doubled/ tripled pawns
-		ii. Isolated pawns
-		iii. Backward pawns and holes
-		iv. Passed pawns
-		v. Good/ bad bishops
-	b. Piece features:
-		i. King safety
-		ii. Connected rooks
+  a. pawn formation:
+    i. Doubled/ tripled pawns
+    ii. Isolated pawns
+    iii. Backward pawns and holes
+    iv. Passed pawns
+    v. Good/ bad bishops
+  b. Piece features:
+    i. King safety
+    ii. Connected rooks
 7. A small random factor is added for some more variation in play
