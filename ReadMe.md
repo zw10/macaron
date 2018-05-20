@@ -1,4 +1,5 @@
-Macaron began when I lost a game of correspondence chess to my friend on time some years ago. Consequently, I promised to deliver my digital representative that they can play against, any time that I wasn't available.
+
+Macaron is a C++ chess engine, which began life when I lost a game of correspondence chess to my friend on time some years ago. Consequently, I promised to deliver my digital representative that they can play against, any time that I wasn't available.
 
 I had two goals for Macaron:
 1. To be fun and human-like to play against, with a style resembling my own
@@ -6,7 +7,7 @@ I had two goals for Macaron:
 
 Development of Macaron was stopped once those goals were reached. No doubt many further improvements in strength based on the existing engine are possible.
 
-Recently, I learned that the wikispaces, the host of the chessprogramming wiki - which was where the many of the ideas for Macaron were taken from - was going to be taken down, hence the upload of the engine in commemoration. Macaron is in implemented in C++ and is an original engine, though it uses a number of well-known algorithms; the code was initially intended for private use only, so please reach out if there are any parts of the code base that you feel should be attributed.
+Recently, I learned that the wikispaces, the host of the chessprogramming wiki - which was where the many of the ideas for Macaron were taken from - was going to be taken down, hence the upload of the engine in commemoration. Macaron uses a number of well-known algorithms; the code was initially intended for private use only, so please reach out if there are any parts of the code base that you feel should be attributed.
 
 Interface
 -------------
@@ -69,13 +70,13 @@ Evaluation
 4. Contempt factor: roughly a fifth of a pawn
 5. Phasing: graduated phasing into endgame evaluation
 6. Some positional features, such as:
-..a. pawn formation:
-....i. Doubled/ tripled pawns
-....ii. Isolated pawns
-....iii. Backward pawns and holes
-....iv. Passed pawns
-....v. Good/ bad bishops
-..b. Piece features:
-....i. King safety
-....ii. Connected rooks
+	a. pawn formation:
+		i. Doubled/ tripled pawns
+		ii. Isolated pawns
+		iii. Backward pawns and holes
+		iv. Passed pawns
+		v. Good/ bad bishops
+	b. Piece features:
+		i. King safety
+		ii. Connected rooks
 7. A small random factor is added for some more variation in play
