@@ -1,13 +1,15 @@
 
-Macaron is a C++ chess engine, which began life when I lost a game of correspondence chess to my friend on time some years ago. Consequently, I promised to deliver my digital representative that they can play against, any time that I wasn't available.
+Macaron is a C++ chess engine using the Winboard protocol, which began life when I lost a game of correspondence chess to my friend on time some years ago. Consequently, I promised to deliver my digital representative that they can play against, any time that I wasn't available.
 
 I had two goals for Macaron:
-1. To be fun and human-like to play against, with a style resembling my own
+1. To be fun and human-like to play against, with a lively style
 2. To be of reasonable strength (a good opponent for club-level players), which I defined as being able to defeat me most of the time
 
-Development of Macaron was stopped once those goals were reached. No doubt many further improvements in strength based on the existing engine are possible.
+Development of Macaron was put on hold once those goals were reached, though no doubt many further improvements in strength based on the existing engine are possible.
 
 Recently, I learned that the wikispaces, the host of the chessprogramming wiki - which was where the many of the ideas for Macaron were taken from - was going to be taken down, hence the upload of the engine in commemoration. Macaron uses a number of well-known algorithms; the code was initially intended for private use only, so please reach out if there are any parts of the code base that you feel should be attributed.
+
+Update: the chessprogramming wiki has migrated to https://www.chessprogramming.org/Main_Page. Definitely worthwhile visiting and learning from the site if you plan to get started with chess programming.
 
 Interface
 -------------
@@ -47,7 +49,6 @@ Implemented but not fully utilised
 -------------
 1. Iterative deepening: although Macaron does use iterative deepening,
 it doesn't use transposition tables so the impact on playing strength is not seen
-time management is seen as lower priority
 2. Null window searches: again, these will not be impactful until transposition tables are
 implemented
 3. Late move reductions: currently disabled 
@@ -58,9 +59,11 @@ Not using
 2. Transposition table
 3. Principal variation search
 4. Multi-threading: Macaron only uses a single thread
-5. Time management: deprioritised
-6. Usage of endgame table bases
-7. Usage of opening books: stylistically a success - Macaron uses some of the same openings as I, despite not using any opening books
+5. Time management: deprioritised for the moment
+6. Endgame table bases
+7. End-game detection (though there is a more simplistic version) - Arena, the GUI already provides this. 
+
+Moreover, some other niceties such as opening books are also not currently implemented.
 
 Evaluation
 -------------

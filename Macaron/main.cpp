@@ -641,6 +641,7 @@ namespace ui
 		void remove();//remove
 		srch::Engine eng;
 		bool xboardMode;
+		bool uciMode;
 		bool forceMode;
 		Colour engineSide;
 	};
@@ -964,7 +965,7 @@ namespace gen
 	 //setFen()
 	int Board::setFen(const std::string& fen)
 	{
-		std::vector<std::string>& fenInfo = misc::split(fen, ' ');
+		std::vector<std::string> fenInfo = misc::split(fen, ' ');
 
 		if (6 != fenInfo.size())
 		{
@@ -5128,7 +5129,7 @@ namespace srch
 
 namespace ui
 {
-	Driver::Driver() :xboardMode(false), forceMode(false), engineSide(BLACK)
+	Driver::Driver() :xboardMode(false), uciMode(false), forceMode(false), engineSide(BLACK)
 	{}
 
 	//force()
@@ -5162,23 +5163,27 @@ namespace ui
 	 //loop()
 	void Driver::loop()
 	{
+		std::ofstream fout;
+		fout.open("commands_sent_log.txt", std::ofstream::out | std::ofstream::app);
+
 		gen::Board& board = eng.b;
 		std::string input;
 		while ("quit" != input)
 		{
-			if (!xboardMode)
+			if (!xboardMode and !uciMode)
 				board.display();
 
 			if (!forceMode && board.currentState.toMove == engineSide &&
 				!eval::testGameEnd(board))
 			{
 				eng.updateHistory();
-				gen::Move& move = eng.search(NEG_INFINITY, POS_INFINITY, SEARCH_DEPTH);
+				gen::Move move = eng.search(NEG_INFINITY, POS_INFINITY, SEARCH_DEPTH);
 				board.makeMove(move);
 				std::cout << "move ";
 				std::cout << misc::board2alpha(move.from);
 				std::cout << misc::board2alpha(move.to);
 				std::cout << std::endl;
+				fout << "output sent: " << misc::board2alpha(move.from) << misc::board2alpha(move.to) << "" << std::endl;
 			}
 			else
 			{
@@ -5201,8 +5206,8 @@ namespace ui
 	int Driver::parseInput(std::string input)
 	{
 		std::ofstream fout;
-		fout.open("D:\\commands_log.txt", std::ofstream::out | std::ofstream::app);
-		fout << input << std::endl;
+		fout.open("commands_received_log.txt", std::ofstream::out | std::ofstream::app);
+		fout << "input received: " << input << std::endl;
 		if ("accepted" == input) { return 0; }
 		else if ("draw" == input) { return 0; }//possibly implement later
 		else if ("sigterm" == input) { return 0; }
@@ -5283,6 +5288,11 @@ namespace ui
 			playWhite();
 			return 0;
 		}
+		else if ("undo" == input)
+		{
+			undo();
+			return 0;
+		}
 
 		return receiveMove(input);
 	}//end parseInput()
@@ -5349,10 +5359,10 @@ namespace ui
 			{
 				board.makeMove(move);
 
-				if (!board.isValid())//illegal move
+				if (!board.isValid())
 				{
 					board.unmakeMove();
-					return 1;
+					return 1;//illegal move
 				}
 
 				return 0;//ok move
@@ -5366,7 +5376,7 @@ namespace ui
 	 //sendFeatures()
 	void Driver::sendFeatures()
 	{
-		std::ofstream fout("D:\\send_features_log.txt", std::ofstream::out | std::ofstream::app);
+		std::ofstream fout("send_features_log.txt", std::ofstream::out | std::ofstream::app);
 		std::string versionNumber, response;
 		std::cin >> versionNumber;
 		std::cout << "feature myname = Macaron 0.3" << std::endl;
@@ -5422,7 +5432,7 @@ namespace ui
 int main()
 {
 	std::cout << "select mode: " << std::endl;
-	std::cout << "(enter xboard to set winboard mode, anything else to remain in console mode)" << std::endl;
+	std::cout << "(enter xboard to set winboard mode, uci to set uci mode, or anything else to remain in console mode)" << std::endl;
 	ui::Driver driver;
 	driver.initiate();
 	driver.loop();
